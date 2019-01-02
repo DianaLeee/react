@@ -1,8 +1,8 @@
 # REACT 개요
 
-MVC구조에서 View에만 관심이 있다.
-View만 담당하기때문에 라우팅 등의 기능들은 라이브러리 사용해서 구현.
-데이터가 변할 때 마다 기존 뷰를 날려버리고 처음부터 새로 렌더링
+MVC구조에서 View에만 관심이 있다.  
+View만 담당하기때문에 라우팅 등의 기능들은 라이브러리 사용해서 구현.  
+데이터가 변할 때 마다 기존 뷰를 날려버리고 처음부터 새로 렌더링.
 
 ## 렌더링?
 
@@ -27,22 +27,26 @@ View만 담당하기때문에 라우팅 등의 기능들은 라이브러리 사�
 3. 바뀐 부분만 실제 DOM에 업데이트
 
 > 지속적으로 데이터가 변화하는 대규모 애플리케이션 구축하기
-> 즉, 작업이 간단할 때 리액트를 안 쓰는 게 더 간단한 경우도 있다
+
+즉, 작업이 간단할 때 리액트를 안 쓰는 게 더 간단한 경우도 있다
 
 ## JSX문법
 
 ### 오류나는데 왜죠...? ㅠㅠ
 
 ```JSX
-render() {
-    return;
-
-    <h1>hello</h1>;
+class App extends Component {
+  render() {
+    return (
+      <h1>Hello</h1>
+      <h2>World</h2>
+    );
+  }
 }
 ```
 
-오류! 부모 요소`<div></div>`로 감싸야 한다.
-why? 규칙: Virtual DOM에서 변화 감지할 때 효율적으로 비교하기 위해 컴포넌트 내부는 DOM 트리구조 하나여야 한다.
+오류! Virtual DOM에서 변화 감지할 때 효율적으로 비교하기 위해 컴포넌트 내부는 DOM 트리구조 하나여야 한다.  
+따라서 부모 요소`<div></div>`로 감싸야 한다.
 
 ### if 쓰면 외않되요?
 
@@ -50,15 +54,16 @@ why? 규칙: Virtual DOM에서 변화 감지할 때 효율적으로 비교하기
 
 ```JSX
 class App extends Component {
-render() {
+  render() {
     const condition = true;
-    return
-    <div className="my-div">
+    return (
+      <div className="my-div">
         {condition ? "TRUE" : "FALSE"}
-        {condition && '조건부 렌더링'}
-    </div>;
-    }
+        {condition && "조건부 렌더링"}
+      </div>
+    );
   }
+}
 ```
 
 - && 사용한 조건부 렌더링  
@@ -89,17 +94,21 @@ class App extends Component {
 
 ### props
 
-컴포넌트 속성을 설정할 때 사용하는 요소.
-컴포넌트를 불러와 사용하느 부모 컴포넌트에서만 설정 가능
+컴포넌트 속성을 설정할 때 사용하는 요소.  
+컴포넌트를 불러와 사용하는 부모 컴포넌트에서만 설정 가능.
 
-부모 컴포넌트에서 설정은 이렇게
+부모 컴포넌트에서 설정은 이렇게...
 
 ```JSX
 <MyComponent name="헬로월드" age="999"/>
 ```
 
-defaultProps
-propTypes
+### defaultProps 과 propTypes
+
+- defaultProps  
+   props의 기본값 지정.
+- propTypes  
+   props의 타입을 지정.
 
 ```JSX
 import React, { Component } from "react";
@@ -164,17 +173,19 @@ class MyComponent extends Component {
 export default MyComponent;
 ```
 
-- `constructor()`
+- `constructor()`  
   state 초깃값 설정 시 사용. 단, `state={...}` 처럼 constructor에서 꺼낼 수도 있다.
-- `setState()`
+- `setState()`  
   state 값 업데이트 할 때 사용.
 
 ### props? state?
 
-- 둘 다 컴포넌트에서 사용하거나 렌더링할 데이터를 담고있다.
-- props
+둘 다 컴포넌트에서 사용하거나 렌더링할 데이터를 담고있다.
+차이점?
+
+- props  
   부모 컴포넌트가 설정.
-- state
+- state  
   컴포넌트 자체적으로 지닌 값으로써 컴포넌트 내부에서 값을 업데이트.
 
 ## 이벤트 핸들링
@@ -269,7 +280,6 @@ export default MyComponent;
 
 ### this.state.names.concat()? 왜 push()를 안써?
 
-state는 setState()로 업데이트 해야한다.
 push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지 않기 때문에 기존배열에 새값을 더한 배열을 새로 생성하는 concat() 사용해야 한다.
 
 ## 컴포넌트의 라이프사이클 메소드
