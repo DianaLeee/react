@@ -345,32 +345,32 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
      default는 true. false가 반환되면 업데이트 작업은 여기서 중지. 컴포넌트 최적화 시 사용.
      `this.props`, `this.state`, `nextProps`, `nextState`로 현재 또는 새로 설정 될 props, state에 접근 가능
 
-- `render`  
-  컴포넌트 리렌더링.
+   - `render`  
+     컴포넌트 리렌더링.
 
-- `getSnapshotBeforeUpdate`  
-  컴포넌트 변화된 내용을 DOM에 반영하기 직전!에 호출.
+   - `getSnapshotBeforeUpdate`  
+     컴포넌트 변화된 내용을 DOM에 반영하기 직전!에 호출.
 
-  ```JSX
-    getSnapshotBeforeUpdate(prevProps, prevState) { //스크롤바 위치 유지
-        if(prevState.array !== this.state.array) {
-            const {scrollTop, scrollHeight} = this.list
-            return {scrollTop, scrollHeight};
-        }
-    }
-  ```
+   ```JSX
+   getSnapshotBeforeUpdate(prevProps, prevState) { //스크롤바 위치 유지
+       if(prevState.array !== this.state.array) {
+           const {scrollTop, scrollHeight} = this.list
+           return {scrollTop, scrollHeight};
+       }
+   }
+   ```
 
-  업데이트 하기 직전의 값을 참고할 일이 있을 때 사용.
-  return값은 `componentDidUpdate`의 snapshot 파라미터로 전달된다.
+   업데이트 하기 직전의 값을 참고할 일이 있을 때 사용.
+   return값은 `componentDidUpdate`의 snapshot 파라미터로 전달된다.
 
-- `componentDidUpdate`  
-  컴포넌트 업데이트 작업 끝난 후 호출.
+   - `componentDidUpdate`  
+      컴포넌트 업데이트 작업 끝난 후 호출.
 
-  ```JSX
-  componentDidUpdate(prevProps, prevState, snapshot) { ... }
-  ```
+   ```JSX
+   componentDidUpdate(prevProps, prevState, snapshot) { ... }
+   ```
 
-  `prevProps`, `prevState`로 이전에 가졌던 데이터에 접근 가능.
+   `prevProps`, `prevState`로 이전에 가졌던 데이터에 접근 가능.
 
 3. 언마운트 : 페이지에서 컴포넌트가 사라짐
 
