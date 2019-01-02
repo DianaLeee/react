@@ -30,7 +30,7 @@ View만 담당하기때문에 라우팅 등의 기능들은 라이브러리 사�
 
 즉, 작업이 간단할 때 리액트를 안 쓰는 게 더 간단한 경우도 있다
 
-## JSX문법
+## JSX문법 (JS와 차이점 위주)
 
 ### 오류나는데 왜죠...? ㅠㅠ
 
@@ -50,7 +50,8 @@ class App extends Component {
 
 ### if 쓰면 외않되요?
 
-- 조건부 연산자 (삼항 연산자)
+- 조건부 연산자 (삼항 연산자)  
+  `{condition ? "TRUE" : "FALSE"}`
 
 ```JSX
 class App extends Component {
@@ -67,9 +68,11 @@ class App extends Component {
 ```
 
 - && 사용한 조건부 렌더링  
+  `{condition && "조건부 렌더링"}`  
   조건이 true일 경우에는 && 이후에 위치한 expression을 반환하고, false일 경우 expression을 반환하지 않고 무시.
 
-- class대신 className
+- class대신 className  
+  `<div className="my-div">`
 
 ## 컴포넌트
 
