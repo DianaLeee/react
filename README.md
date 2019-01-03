@@ -367,11 +367,11 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
    return값은 `componentDidUpdate`의 snapshot 파라미터로 전달된다.
 
    - `componentDidUpdate`  
-      컴포넌트 업데이트 작업 끝난 후 호출.
+     컴포넌트 업데이트 작업 끝난 후 호출.
 
-   ```JSX
-   componentDidUpdate(prevProps, prevState, snapshot) { ... }
-   ```
+     ```JSX
+     componentDidUpdate(prevProps, prevState, snapshot) { ... }
+     ```
 
    `prevProps`, `prevState`로 이전에 가졌던 데이터에 접근 가능.
 
@@ -394,7 +394,63 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
 뭘로? `shouldComponentUpdate`로!  
 Virtual DOM에 렌더링하는 과정에서 render() 함수를 실행하지 않아 이전 DOM정보 그대로 쓰기 때문에 자원 낭비 방지.
 
+### 함수형 컴포넌트
+
+컴포넌트 생성 시 매번 `class MyComponent extends React.Component {...}` 선언하기 번거롭다.  
+라이플사이클 API와 state 사용하지 않고 props 전달받아 뷰를 렌더링 하는 일만 한다면, 함수형 컴포넌트 사용해보자.
+
+```JSX
+import React from 'react';
+
+function MyComponent(props) {
+    return (
+        <div>Hello {props.name}</div>
+    )
+}
+export default MyComponent;
+```
+
+또는 ES6 문법 사용해서
+
+```JSX
+import React from 'react';
+
+const MyComponent = ({name} => {
+    return (
+        <div>Hello {name}</div>
+    )
+})
+```
+
 ## 리덕스
 
 보통 리액트 프로젝트... 부모 컴포넌트가 중간자 역할을 해서, props를 통해 변경값 등을 전달
 내부 컴포넌트끼리는 소통 X(할수는 있는데 복잡하고 권장되지 않는 방식)
+
+![redux1](./image/nWgg01Z.png)  
+루트에서 G 컴포넌트에 값 전달하고 싶을 때, A->E->G 거쳐야 함.  
+비효율적. 변수 이름이라도 바뀌면...? E에게는 필요없는 props인데 단지 G에게 전달하기 위해 props들을 선언해야 한다거나...
+
+### 효율적으로 상태 관리를 할 수 있는 라이브러리
+
+Redux, MobX  
+리덕스는 상태값을 컴포넌트에 종속시키지 않고, 상태 관리를 컴포넌트 바깥에서 한다!
+
+1. 스토어  
+   애플리케이션의 상태 값들을 가지고 있음.  
+   스토어는 항상 단 한 개. 단, 리듀서를 여러개 만들 수는 있다.
+2. 액션  
+   상태 변화를 일으킬 때 참조하는 객체.  
+   근데 액션 새로 만들 때마다 직접 객체 만들면 귀찮으니까 액션 생성 함수(action creator) 이용.
+3. 디스패치  
+   액션을 스토어에 전달하는 것.
+4. 리듀서  
+   상태를 변화시키는 로직이 있는 함수.  
+   state(현재 상태), action(액션 객체)를 파라미터로 받아서 새로운 상태객체 만들어 반환
+5. 구독  
+   스토어값이 필요한 컴포넌트는 스토어를 구독하고 있음.
+
+리덕스의 상태인 state 값은 읽기 전용이라 직접 수정해서는 안된다.  
+상태 업데이트 시, 새 상태 객체를 만들어서 넣어줘야 한다.
+
+### 실제 적용?
