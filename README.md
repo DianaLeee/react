@@ -1,12 +1,13 @@
 # REACT 개요
 
-MVC구조에서 View에만 관심이 있다.  
-View만 담당하기때문에 라우팅 등의 기능들은 라이브러리 사용해서 구현.  
-데이터가 변할 때 마다 기존 뷰를 날려버리고 처음부터 새로 렌더링.
+- MVC구조에서 View에만 관심이 있다.
+- View 부분을 컴포넌트로 구성... 따라서 컴포넌트 단위로 재사용이 가능.
+- View만 담당하기때문에 라우팅 등의 기능들은 라이브러리 사용해서 구현.
+- 데이터가 변할 때 마다 기존 뷰를 날려버리고 처음부터 새로 렌더링.
 
 ## 렌더링?
 
-렌더링: 사용자 화면에 뷰를 보여주는 것
+- 렌더링: 사용자 화면에 뷰를 보여주는 것
 
 1. 초기 렌더링
 
@@ -90,26 +91,28 @@ import MyComponent from './MyComponent' //컴포넌트 파일 불러오기
 ...
 class App extends Component {
     render() {
-        return <MyComponent />; //불러온 컴포넌트 사용하기
+        return <MyComponent />; //불러온 컴포넌트 사용하기. 조립조립
     }
 }
 ```
 
 ### props
 
-컴포넌트 속성을 설정할 때 사용하는 요소.  
-컴포넌트를 불러와 사용하는 부모 컴포넌트에서만 설정 가능.
+- 컴포넌트 속성을 설정할 때 사용하는 요소.
+- 컴포넌트를 불러와 사용하는 부모 컴포넌트에서만 설정 가능.
+- 부모 컴포넌트에서 설정해서 자식 컴포넌트에서 정보를 받아 사용.
 
 부모 컴포넌트에서 설정은 이렇게...
+`<MyComponent name="헬로월드" age="999"/>`
 
-```JSX
-<MyComponent name="헬로월드" age="999"/>
-```
+자식 컴포넌트에서 사용은 이렇게...
+`{this.props.name}`
 
 ### defaultProps 과 propTypes
 
 - defaultProps  
    props의 기본값 지정.
+
 - propTypes  
    props의 타입을 지정.
 
@@ -119,7 +122,6 @@ import PropTypes from "prop-types"; //검증하자
 class MyComponent extends Component {
     render() {
         return (
-
             <div>
                 <p>부모가 지어준 이름은요 {this.props.name} 입니다</p>
                 <p>나이는요 {this.props.age} 살 입니다</p>
@@ -142,6 +144,8 @@ export default MyComponent;
 
 ### state
 
+- 컴포넌트 내부에서 자신의 상태를 제어할 수 있음. 굳이 부모에서 설정 안해도 되는 것들.
+
 ```JSX
 import React, { Component } from "react";
 
@@ -152,6 +156,11 @@ class MyComponent extends Component {
             number: 777
         };
     }
+    /* 보통 이렇게 쓰는듯
+    state = {
+        number: 777
+    }
+    */
 
     state = {
         number: 0
@@ -163,7 +172,7 @@ class MyComponent extends Component {
                 <button
                     onClick={() => {
                     this.setState({
-                    number: this.state.number + 1
+                        number: this.state.number + 1
                     });
                     }}
                 />
@@ -177,9 +186,13 @@ export default MyComponent;
 ```
 
 - `constructor()`  
-  state 초깃값 설정 시 사용. 단, `state={...}` 처럼 constructor에서 꺼낼 수도 있다.
+  state 초깃값 설정 시 사용.  
+  근데 보통 `state={...}` 이렇게 쓰는듯.
+
 - `setState()`  
   state 값 업데이트 할 때 사용.
+  state 값 변경시키고 싶으면 setState()를 거쳐야한다. 직접변경 안돼.  
+  호출 될 때마다 `render()`발생.
 
 ### props? state?
 
@@ -188,6 +201,7 @@ export default MyComponent;
 
 - props  
   부모 컴포넌트가 설정.
+
 - state  
   컴포넌트 자체적으로 지닌 값으로써 컴포넌트 내부에서 값을 업데이트.
 
@@ -238,7 +252,7 @@ export default MyComponent;
 ## 컴포넌트 반복
 
 반복되는 컴포넌트는 어떻게 렌더링할까?
-뭐긴뭐야 JS 배열 객체 내장 함수 `map()`을 이용해야지
+JS 배열 객체 내장 함수 `map()`을 이용.
 
 ### map()과 key
 
@@ -288,6 +302,8 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
 ## 컴포넌트의 라이프사이클 메소드
 
 ### 라이프사이클
+
+- 마운트, 업데이트, 언마운트
 
 1. 마운트 : 페이지가 컴포넌트에 나타남
 
@@ -394,7 +410,33 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
 뭘로? `shouldComponentUpdate`로!  
 Virtual DOM에 렌더링하는 과정에서 render() 함수를 실행하지 않아 이전 DOM정보 그대로 쓰기 때문에 자원 낭비 방지.
 
-## 리덕스
+## Redux
 
 보통 리액트 프로젝트... 부모 컴포넌트가 중간자 역할을 해서, props를 통해 변경값 등을 전달
 내부 컴포넌트끼리는 소통 X(할수는 있는데 복잡하고 권장되지 않는 방식)
+
+![redux1](./image/nWgg01Z.png)  
+루트에서 G 컴포넌트에 값 전달하고 싶을 때, A->E->G 거쳐야 함.  
+비효율적. 변수 이름이라도 바뀌면...? E에게는 필요없는 props인데 단지 G에게 전달하기 위해 props들을 선언해야 한다거나...
+
+### 효율적으로 상태 관리를 할 수 있는 라이브러리
+
+Redux, MobX  
+리덕스는 상태값을 컴포넌트에 종속시키지 않고, 상태 관리를 컴포넌트 바깥에서 한다!
+
+1. 스토어  
+   애플리케이션의 상태 값들을 가지고 있음.  
+   스토어는 항상 단 한 개. 단, 리듀서를 여러개 만들 수는 있다.
+2. 액션  
+   상태 변화를 일으킬 때 참조하는 객체.  
+   근데 액션 새로 만들 때마다 직접 객체 만들면 귀찮으니까 액션 생성 함수(action creator) 이용.
+3. 디스패치  
+   액션을 스토어에 전달하는 것.
+4. 리듀서  
+   상태를 변화시키는 로직이 있는 함수.  
+   state(현재 상태), action(액션 객체)를 파라미터로 받아서 새로운 상태객체 만들어 반환
+5. 구독  
+   스토어값이 필요한 컴포넌트는 스토어를 구독하고 있음.
+
+리덕스의 상태인 state 값은 읽기 전용이라 직접 수정해서는 안된다.  
+상태 업데이트 시, 새 상태 객체를 만들어서 넣어줘야 한다.
