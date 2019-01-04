@@ -307,8 +307,7 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
 
 1. 마운트 : 페이지가 컴포넌트에 나타남
 
-   - `constructor`  
-     컴포넌트 새로 만들때마다 호출되는 클래스 생성자 메소드
+   - `constructor` : 컴포넌트 새로 만들때마다 호출되는 클래스 생성자 메소드
 
      ```JSX
      constructor(props) { ... }
@@ -316,8 +315,7 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
 
      초기 state 설정할 때 사용했었죠?
 
-   - `getDerivedStateFromProps`  
-     props에 있는 값을 state에 동기화하는 메소드
+   - `getDerivedStateFromProps` : props에 있는 값을 state에 동기화하는 메소드
 
      ```JSX
      getDerivedStateFromProps(nextProps, prevState) { // props에서 받아온 값을 state에 동기화
@@ -328,8 +326,7 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
      }
      ```
 
-   - `render`  
-     준비한 UI를 렌더링하는 메소드
+   - `render` : 준비한 UI를 렌더링하는 메소드
 
      ```JSX
      render() { ... }
@@ -337,8 +334,7 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
 
      주의! state 직접 변형하면 안된다. 웹브라우저에 접근해서도 안된다! -> `componentDidMount` 쓰셍.
 
-   - `componentDidMount`  
-     컴포넌트가 브라우저에 나타난 후 호출하는 메소드
+   - `componentDidMount` : 컴포넌트가 브라우저에 나타난 후 호출하는 메소드
 
      ```JSX
      componentDidMount() { ... }
@@ -350,11 +346,9 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
 2. 업데이트 : 리렌더링을 통해 컴포넌트 정보를 업데이트
    props, state가 바뀌거나 부모 컴포넌트가 리렌더링 되거나 `this.forceUpdate`로 강제로 렌더링할때 컴포넌트가 업데이트 된다.
 
-   - `getDerivedStateFromProps`  
-     아까 마운트에서도 봤었는데? ㅇㅇ props 바뀌어서 업데이트할 때도 호출.
+   - `getDerivedStateFromProps` : 아까 마운트에서도 봤었는데? ㅇㅇ props 바뀌어서 업데이트할 때도 호출.
 
-   - `shouldComponentUpdate`  
-     리렌더링 할까?말까? false가 반환되면 아래 메소드들은 호출되지 않음.
+   - `shouldComponentUpdate` : 리렌더링 할까?말까? false가 반환되면 아래 메소드들은 호출되지 않음.
 
      ```JSX
      shouldComponentUpdate(nextProps, nextState) { ... }
@@ -364,11 +358,9 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
      default는 true. false가 반환되면 업데이트 작업은 여기서 중지. 컴포넌트 최적화 시 사용.
      `this.props`, `this.state`, `nextProps`, `nextState`로 현재 또는 새로 설정 될 props, state에 접근 가능
 
-   - `render`  
-     컴포넌트 리렌더링.
+   - `render` : 컴포넌트 리렌더링.
 
-   - `getSnapshotBeforeUpdate`  
-     컴포넌트 변화된 내용을 DOM에 반영하기 직전!에 호출.
+   - `getSnapshotBeforeUpdate` : 컴포넌트 변화된 내용을 DOM에 반영하기 직전!에 호출.
 
    ```JSX
    getSnapshotBeforeUpdate(prevProps, prevState) { //스크롤바 위치 유지
@@ -382,8 +374,7 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
    업데이트 하기 직전의 값을 참고할 일이 있을 때 사용.
    return값은 `componentDidUpdate`의 snapshot 파라미터로 전달된다.
 
-   - `componentDidUpdate`  
-      컴포넌트 업데이트 작업 끝난 후 호출.
+   - `componentDidUpdate` : 컴포넌트 업데이트 작업 끝난 후 호출.
 
    ```JSX
    componentDidUpdate(prevProps, prevState, snapshot) { ... }
@@ -393,8 +384,7 @@ push() 쓰면 기존 배열 자체가 변형된다. 리렌더링을 수반하지
 
 3. 언마운트 : 페이지에서 컴포넌트가 사라짐
 
-   - `componentWillUnmount`  
-     컴포넌트가 브라우저에서 사라지기 전에 호출.
+   - `componentWillUnmount` : 컴포넌트가 브라우저에서 사라지기 전에 호출.
 
      ```JSX
      componentWillUnmount() {...}
